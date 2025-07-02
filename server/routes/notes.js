@@ -14,6 +14,17 @@ router.post('/', async (req, res) => {
   }
 });
 
+// DELETE a note
+router.delete('/:id', async (req, res) => {
+  try {
+    const deleted = await Note.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).json({ error: 'Note not found' });
+    res.status(200).json({ message: 'Note deleted' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Get all notes
 router.get('/', async (req, res) => {
   try {
